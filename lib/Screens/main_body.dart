@@ -28,25 +28,28 @@ class _MainBodyState extends State<MainBody> {
   }
 
   QuerySnapshot? allDatasnapshot;
-  Future UserData() async{
-     databasemethods.getUsers().then((val) {
+  Future UserData() async {
+    databasemethods.getUsers().then((val) {
       allDatasnapshot = val;
+      setState(() {
+        isLoading =false;
+      });
     });
   }
-@override
+
+  @override
   void initState() {
     setState(() {
-      isLoading=true;
+      isLoading = true;
     });
-     UserData().then((value) {
-       setState(() {
-         isLoading=false;
-       });
-     });
+    UserData().then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
     super.initState();
-   
- 
   }
+
   Widget Search() {
     return searchsnapshot != null
         ? ListView.builder(
@@ -57,15 +60,18 @@ class _MainBodyState extends State<MainBody> {
                 url: searchsnapshot!.docs[index]["imageUrl"]),
             itemCount: searchsnapshot?.docs.length,
           )
-        : allDatasnapshot != null ?    // Container();
-        ListView.builder(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => NCard(context,
-                userNameA: allDatasnapshot?.docs[index]["fullname"],
-                urlA: allDatasnapshot?.docs[index]["imageUrl"]),
-            itemCount: allDatasnapshot?.docs.length,
-          ):const Center(child: CircularProgressIndicator(),);
+        : allDatasnapshot != null
+            ? ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) => NCard(context,
+                    userNameA: allDatasnapshot?.docs[index]["fullname"],
+                    urlA: allDatasnapshot?.docs[index]["imageUrl"]),
+                itemCount: allDatasnapshot?.docs.length,
+              )
+            : const Center(
+                child: CircularProgressIndicator(),
+              );
   }
 
   @override
@@ -105,54 +111,6 @@ class _MainBodyState extends State<MainBody> {
                       colors: [Colors.orange, Colors.red],
                       begin: Alignment.bottomRight,
                       end: Alignment.topLeft)),
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     CupertinoTabBar.CupertinoTabBar(
-              //       const Color(0xFF1DE9B6),
-              //       const Color(0xFFE040FB),
-              //       const [
-              //         Text(
-              //           "Camera",
-              //           style: TextStyle(
-              //             color: Colors.white,
-              //             fontSize: 18.75,
-              //             fontWeight: FontWeight.w400,
-              //             fontFamily: "SFProRounded",
-              //           ),
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         Text(
-              //           "Chats",
-              //           style: TextStyle(
-              //             color: Colors.white,
-              //             fontSize: 18.75,
-              //             fontWeight: FontWeight.w400,
-              //             fontFamily: "SFProRounded",
-              //           ),
-              //           textAlign: TextAlign.center,
-              //         ),
-              //         Text(
-              //           "Calls",
-              //           style: TextStyle(
-              //             color: Colors.white,
-              //             fontSize: 18.75,
-              //             fontWeight: FontWeight.w400,
-              //             fontFamily: "SFProRounded",
-              //           ),
-              //           textAlign: TextAlign.center,
-              //         ),
-              //       ],
-              //       cupertinoTabBarIIValueGetter,
-              //       (int index) {
-              //         setState(() {
-              //           cupertinoTabBarIIValue = index;
-              //         });
-              //       },
-              //       useSeparators: true,
-              //     ),
-              //   ],
-              // ),
             ),
             Container(
                 height: MediaQuery.of(context).size.height * 0.765,
@@ -198,17 +156,6 @@ Widget NCard(
                   style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w500),
                 ),
-                // const SizedBox(
-                //   height: 2,
-                // ),
-                // const Opacity(
-                //   opacity: 0.6,
-                //   child: Text(
-                //     "This is demo!!!!!!!!!!",
-                //     maxLines: 1,
-                //     overflow: TextOverflow.ellipsis,
-                //   ),
-                // )
               ],
             ),
           ),
@@ -255,17 +202,6 @@ Widget Card(context, {required String userName, required String url}) {
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
-                      // const SizedBox(
-                      //   height: 2,
-                      // ),
-                      // const Opacity(
-                      //   opacity: 0.6,
-                      //   child: Text(
-                      //     "This is demo!!!!!!!!!!",
-                      //     maxLines: 1,
-                      //     overflow: TextOverflow.ellipsis,
-                      //   ),
-                      // )
                     ],
                   ),
                 ),
@@ -273,5 +209,6 @@ Widget Card(context, {required String userName, required String url}) {
             ],
           ),
         );
-      });
+      });   
 }
+

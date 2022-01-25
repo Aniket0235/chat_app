@@ -19,33 +19,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: buildBottomNavigationBar(),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.orange , Colors.red],
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft
-              )
-            ),
-          ),
-          elevation: 0,
+        appBar:GradientAppBar(),
+        //  AppBar(
+        //   automaticallyImplyLeading: false,
+        //   flexibleSpace: Container(
+        //     decoration: const BoxDecoration(
+        //       gradient: LinearGradient(
+        //         colors: [Colors.orange , Colors.red],
+        //         begin: Alignment.bottomRight,
+        //         end: Alignment.topLeft
+        //       )
+        //     ),
+        //   ),
+        //   elevation: 0,
           
-          title: const Text(
-            "Chats",
-            style: TextStyle(
-                color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),
-          ),
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {},
-          //       icon: const Icon(
-          //         Icons.search,
-          //         color: Colors.black,
-          //       ))
-          // ],
-        ),
+        //   title: const Text(
+        //     "Chats",
+        //     style: TextStyle(
+        //         color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),
+        //   ),
+        // ),
         body: _isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -89,5 +82,31 @@ class _HomePageState extends State<HomePage> {
       default:
         return const MainBody();
     }
+  }
+}
+class GradientAppBar extends StatelessWidget with PreferredSizeWidget {
+  @override
+  final Size preferredSize;
+
+  GradientAppBar({Key? key})
+      : preferredSize = const Size.fromHeight(56.0),
+        super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    const primaryColor = Color(0xff4338CA);
+    const secondaryColor = Color(0xff6D28D9);
+    return AppBar(
+      title:
+          const Text("Chamber", style: TextStyle(color: Colors.white)),
+      backgroundColor: primaryColor,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [primaryColor, secondaryColor],
+            stops: [0.5, 1.0],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Design extends StatelessWidget {
   final String message;
@@ -16,7 +17,7 @@ class Design extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: isMe ? Colors.green[200] : Colors.amber,
+                color: isMe ? Colors.amber[200] : Colors.grey[300],
                 borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(12),
                     topRight: const Radius.circular(12),
@@ -26,7 +27,7 @@ class Design extends StatelessWidget {
                     bottomRight: isMe
                         ? const Radius.circular(0)
                         : const Radius.circular(12))),
-            width: 140,
+            width: 150,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Column(
@@ -42,7 +43,8 @@ class Design extends StatelessWidget {
                         ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     }
-                    return Text(
+                    return 
+                    Text(
                       (futureSnapshot.requireData["fullname"]),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     );
